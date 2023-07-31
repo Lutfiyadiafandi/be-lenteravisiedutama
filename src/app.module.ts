@@ -14,6 +14,7 @@ import { GalleryModule } from './gallery/gallery.module';
 import { PartnerModule } from './partner/partner.module';
 import { ContactModule } from './contact/contact.module';
 import { WhyLveModule } from './why-lve/why-lve.module';
+// import { BundlingProductModule } from './relations/bundlingproduct.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { WhyLveModule } from './why-lve/why-lve.module';
     PartnerModule,
     ContactModule,
     WhyLveModule,
+    // BundlingProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],

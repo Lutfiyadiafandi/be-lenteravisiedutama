@@ -3,7 +3,7 @@ import { TestimoniService } from './testimoni.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('testimoni')
+@Controller('api/testimoni')
 export class TestimoniController {
   constructor(private readonly testimoniService: TestimoniService) {}
 
@@ -18,9 +18,4 @@ export class TestimoniController {
       return response.responseNotFound();
     }
   }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.testimoniService.findOne(+id);
-  // }
 }

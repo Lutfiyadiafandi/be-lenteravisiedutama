@@ -1,16 +1,19 @@
-import { Controller, Get, Res } from '@nestjs/common';
+import { Controller, Get, Param, Res } from '@nestjs/common';
 import { VisimisiService } from './visimisi.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('visimisi')
+@Controller('api/visimisi')
 export class VisimisiController {
   constructor(private readonly visimisiService: VisimisiService) {}
 
   @Get()
-  async findAllVisiMisi(@Res() res: Response): Promise<any> {
+  async findAllVisiMisi(
+    @Res() res: Response,
+    @Param('id') id: number,
+  ): Promise<any> {
     try {
-      const data = await this.visimisiService.findAllVisiMisiWithImage();
+      const data = await this.visimisiService.findAllVisiMisiWithImage(id);
       const response = new BaseResponseApi<any>(true, 'success', data, res);
       return response.responseSuccess();
     } catch (error) {

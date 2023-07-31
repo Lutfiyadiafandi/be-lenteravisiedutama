@@ -1,11 +1,4 @@
-import { ProductEntity } from 'src/product/entities/product.entity';
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'bundling_products' })
 export class BundlingEntity {
@@ -20,10 +13,6 @@ export class BundlingEntity {
 
   @Column()
   totalproduct: string;
-
-  // @ManyToMany(() => ProductEntity, (product) => product.bundlings)
-  // @JoinTable()
-  // products: ProductEntity[];
 
   @Column()
   price: string;

@@ -28,8 +28,4 @@ export class GalleryService {
       throw new NotFoundException('failed');
     }
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} gallery`;
-  }
 }

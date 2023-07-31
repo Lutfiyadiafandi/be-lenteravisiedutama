@@ -3,14 +3,17 @@ import { AboutService } from './about.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('about')
+@Controller('api/about')
 export class AboutController {
   constructor(private readonly aboutService: AboutService) {}
 
   @Get()
-  async findAllAbout(@Res() res: Response): Promise<any> {
+  async findAllAbout(
+    @Res() res: Response,
+    @Param('id') id: number,
+  ): Promise<any> {
     try {
-      const data = await this.aboutService.findAllAboutWithImage();
+      const data = await this.aboutService.findAllAboutWithImage(id);
       const response = new BaseResponseApi<any>(true, 'success', data, res);
       return response.responseSuccess();
     } catch (error) {

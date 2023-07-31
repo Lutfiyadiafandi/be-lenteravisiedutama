@@ -67,6 +67,7 @@ export class ProductService {
     });
     return merge;
   }
+
   async findOneProductsWithImage(slug: string): Promise<ProductEntity[]> {
     const findProducts = await this.findOneProduct(slug);
     const getImage = await this.getOneImage(slug);
@@ -80,6 +81,4 @@ export class ProductService {
     const products = merge();
     return products;
   }
-  
- 
 }

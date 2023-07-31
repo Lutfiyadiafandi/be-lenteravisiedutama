@@ -3,7 +3,7 @@ import { BundlingService } from './bundling.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('bundling')
+@Controller('api/bundling')
 export class BundlingController {
   constructor(private readonly bundlingService: BundlingService) {}
 
@@ -19,9 +19,4 @@ export class BundlingController {
       return response.responseNotFound();
     }
   }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.bundlingService.findOne(+id);
-  // }
 }

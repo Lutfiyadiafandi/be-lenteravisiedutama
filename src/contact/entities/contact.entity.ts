@@ -7,17 +7,10 @@ export class ContactEntity {
 
   @Column()
   email: string;
-  // product_id: number;
 
   @Column()
   phonenumber: string;
-  // bundling_product_id: number;
-
-  // @Column()
-  // // phonenumber: string;
-  // bundling_product_order: number;
 
   @Column()
-  // product_order: number;
   description: string;
 }

@@ -11,39 +11,38 @@ export class VisimisiService {
     private visimisiRepository: Repository<VisiMisiEntity>,
   ) {}
 
-  async findAllVisiMisi(): Promise<VisiMisiEntity[]> {
-    return await this.visimisiRepository.find();
+  async findAllVisiMisi(id: number) {
+    return await this.visimisiRepository.findOne({
+      where: { id },
+    });
   }
 
   async getImage(): Promise<any> {
-    const baseUrl = 'http://127.0.0.1:1337/api/visi-misis?populate=*';
+    const baseUrl = 'http://127.0.0.1:1337/api/visi-misi?populate=*';
     try {
       const res = await axios.get(baseUrl);
-      const findImage = res.data.data.map((image: any) => {
-        const imageUrl = image.attributes.image.data.attributes.url;
-        return {
-          id: image.id,
-          url: imageUrl,
-        };
-      });
-      return findImage;
+      const findImage = res.data.data.attributes.image.data.attributes.url;
+      const imageUrl = `http://localhost:1337${findImage}`;
+      return {
+        image: imageUrl,
+      };
     } catch (error) {
       console.log(error);
       throw new NotFoundException('failed');
     }
   }
 
-  async findAllVisiMisiWithImage(): Promise<VisiMisiEntity[]> {
-    const findAllVisiMisi = await this.findAllVisiMisi();
+  async findAllVisiMisiWithImage(id: number): Promise<VisiMisiEntity[]> {
+    const findAllVisiMisi = await this.findAllVisiMisi(id);
     const getImage = await this.getImage();
 
-    const merge = findAllVisiMisi.map((item) => {
-      const image = getImage.find((img: any) => img.id == item.id);
+    const merge = () => {
       return {
-        ...item,
-        image: image ? `http://localhost:1337${image.url}` : ' ',
+        ...findAllVisiMisi,
+        ...getImage,
       };
-    });
-    return merge;
+    };
+    const visimisi = merge();
+    return visimisi;
   }
 }

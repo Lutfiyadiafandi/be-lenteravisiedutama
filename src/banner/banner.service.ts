@@ -11,39 +11,38 @@ export class BannerService {
     private bannerRepository: Repository<BannerEntity>,
   ) {}
 
-  async findAllBanner(): Promise<BannerEntity[]> {
-    return await this.bannerRepository.find();
+  async findAllBanner(id: number) {
+    return await this.bannerRepository.findOne({
+      where: { id },
+    });
   }
 
   async getImage(): Promise<any> {
-    const baseUrl = 'http://127.0.0.1:1337/api/banners?populate=*';
+    const baseUrl = 'http://127.0.0.1:1337/api/banner?populate=*';
     try {
       const res = await axios.get(baseUrl);
-      const findImage = res.data.data.map((image: any) => {
-        const imageUrl = image.attributes.image.data.attributes.url;
-        return {
-          id: image.id,
-          url: imageUrl,
-        };
-      });
-      return findImage;
+      const findImage = res.data.data.attributes.image.data.attributes.url;
+      const imageUrl = `http://localhost:1337${findImage}`;
+      return {
+        image: imageUrl,
+      };
     } catch (error) {
       console.log(error);
       throw new NotFoundException('failed');
     }
   }
 
-  async findAllBannerWithImage(): Promise<BannerEntity[]> {
-    const findAllBanner = await this.findAllBanner();
+  async findAllBannerWithImage(id: number): Promise<BannerEntity[]> {
+    const findAllBanner = await this.findAllBanner(id);
     const getImage = await this.getImage();
 
-    const merge = findAllBanner.map((item) => {
-      const image = getImage.find((img: any) => img.id == item.id);
+    const merge = () => {
       return {
-        ...item,
-        image: image ? `http://localhost:1337${image.url}` : ' ',
+        ...findAllBanner,
+        ...getImage,
       };
-    });
-    return merge;
+    };
+    const banner = merge();
+    return banner;
   }
 }

@@ -46,8 +46,4 @@ export class TestimoniService {
     });
     return merge;
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} testimoni`;
-  }
 }

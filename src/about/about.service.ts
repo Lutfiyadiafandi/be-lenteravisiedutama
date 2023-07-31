@@ -11,39 +11,38 @@ export class AboutService {
     private aboutRepository: Repository<AboutEntity>,
   ) {}
 
-  async findAllAbout(): Promise<AboutEntity[]> {
-    return await this.aboutRepository.find();
+  async findAllAbout(id: number) {
+    return await this.aboutRepository.findOne({
+      where: {id}
+    });
   }
 
   async getImage(): Promise<any> {
-    const baseUrl = 'http://127.0.0.1:1337/api/about-uses?populate=*';
+    const baseUrl = 'http://127.0.0.1:1337/api/about?populate=*';
     try {
       const res = await axios.get(baseUrl);
-      const findImage = res.data.data.map((image: any) => {
-        const imageUrl = image.attributes.image.data.attributes.url;
-        return {
-          id: image.id,
-          url: imageUrl,
-        };
-      });
-      return findImage;
+      const findImage = res.data.data.attributes.image.data.attributes.url;
+      const imageUrl = `http://localhost:1337${findImage}`;
+      return {
+        image: imageUrl,
+      };
     } catch (error) {
       console.log(error);
       throw new NotFoundException('failed');
     }
   }
 
-  async findAllAboutWithImage(): Promise<AboutEntity[]> {
-    const findAllAbout = await this.findAllAbout();
+  async findAllAboutWithImage(id: number): Promise<AboutEntity[]> {
+    const findAbout = await this.findAllAbout(id);
     const getImage = await this.getImage();
 
-    const merge = findAllAbout.map((item) => {
-      const image = getImage.find((img: any) => img.id == item.id);
+    const merge = () => {
       return {
-        ...item,
-        image: image ? `http://localhost:1337${image.url}` : ' ',
+        ...findAbout,
+        ...getImage,
       };
-    });
-    return merge;
+    };
+    const about = merge();
+    return about;
   }
 }

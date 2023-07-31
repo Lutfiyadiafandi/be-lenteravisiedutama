@@ -3,7 +3,7 @@ import { GalleryService } from './gallery.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('gallery')
+@Controller('api/gallery')
 export class GalleryController {
   constructor(private readonly galleryService: GalleryService) {}
 
@@ -18,9 +18,4 @@ export class GalleryController {
       return response.responseNotFound();
     }
   }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.galleryService.findOne(+id);
-  // }
 }

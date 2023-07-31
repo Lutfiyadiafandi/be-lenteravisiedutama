@@ -1,9 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BundlingEntity } from './entities/bundling.entity';
 import { Repository } from 'typeorm';
-import axios from 'axios';
-import { ProductEntity } from 'src/product/entities/product.entity';
 
 @Injectable()
 export class BundlingService {
@@ -13,42 +11,50 @@ export class BundlingService {
   ) {}
 
   async findAllBundling(): Promise<BundlingEntity[]> {
-    return await this.bundlingRepository.find();
-  }
+    const bundling = await this.bundlingRepository
+      .createQueryBuilder('bundling')
+      .leftJoinAndSelect(
+        'products_bundlings_links',
+        'products_bundlings_links',
+        'products_bundlings_links.bundling_product_id = bundling.id',
+      )
+      .leftJoinAndSelect(
+        'products',
+        'products',
+        'products_bundlings_links.product_id = products.id',
+      )
+      .getRawMany();
 
-  async getTitleProduct(): Promise<any> {
-    const baseUrl = 'http://localhost:1337/api/bundling-products?populate=*';
-    try {
-      const res = await axios.get(baseUrl);
-      const findTitle = res.data.data.attributes.products.data.map((i: any) => {
-        const titleProduct = i.attributes.title;
-        console.log(titleProduct);
-        return {
-          id: i.id,
-          title: titleProduct,
-        };
+    const outputData = [];
+    const bundlingMap = new Map();
+
+    bundling.forEach((item) => {
+      const bundlingId = item.bundling_id;
+
+      if (!bundlingMap.has(bundlingId)) {
+        bundlingMap.set(bundlingId, {
+          id: item.bundling_id,
+          title: item.bundling_title,
+          slug: item.bundling_slug,
+          totalproduct: item.bundling_totalproduct,
+          price: item.bundling_price,
+          discountprice: item.bundling_discountprice,
+          detail: item.bundling_detail,
+          register: item.bundling_register,
+          products: [],
+        });
+      }
+
+      bundlingMap.get(bundlingId).products.push({
+        products_id: item.products_id,
+        products_title: item.products_title,
       });
-      return findTitle;
-    } catch (error) {
-      console.log(error);
-      throw new NotFoundException('failed');
-    }
-  }
-  async findAllBundlingWithTitleProduct(): Promise<BundlingEntity[]> {
-    const findAllBundling = await this.findAllBundling();
-    const getTitle = await this.getTitleProduct();
-
-    const merge = findAllBundling.map((item) => {
-      const title = getTitle.find((title: any) => title.id == item.id);
-      return {
-        ...item,
-        product: title ? title : ' ',
-      };
     });
-    return merge;
-  }
 
-  findOne(id: number) {
-    return `This action returns a #${id} bundling`;
+    bundlingMap.forEach((bundling) => {
+      outputData.push(bundling);
+    });
+
+    return outputData;
   }
 }

@@ -1,16 +1,19 @@
-import { Controller, Get, Res } from '@nestjs/common';
+import { Controller, Get, Param, Res } from '@nestjs/common';
 import { InfografisService } from './infografis.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('infografis')
+@Controller('api/infografis')
 export class InfografisController {
   constructor(private readonly infografisService: InfografisService) {}
 
   @Get()
-  async findAllInfografis(@Res() res: Response): Promise<any> {
+  async findAllInfografis(
+    @Res() res: Response,
+    @Param('id') id: number,
+  ): Promise<any> {
     try {
-      const data = await this.infografisService.findAllInfografisWithImage();
+      const data = await this.infografisService.findAllInfografisWithImage(id);
       const response = new BaseResponseApi<any>(true, 'success', data, res);
       return response.responseSuccess();
     } catch (error) {

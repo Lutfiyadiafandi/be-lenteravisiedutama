@@ -3,7 +3,7 @@ import { PartnerService } from './partner.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('partner')
+@Controller('api/partner')
 export class PartnerController {
   constructor(private readonly partnerService: PartnerService) {}
 
@@ -18,9 +18,4 @@ export class PartnerController {
       return response.responseNotFound();
     }
   }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.partnerService.findOne(+id);
-  // }
 }

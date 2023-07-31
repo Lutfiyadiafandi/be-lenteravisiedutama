@@ -11,39 +11,38 @@ export class InfografisService {
     private infografisRepository: Repository<InfografisEntity>,
   ) {}
 
-  async findAllInfografis(): Promise<InfografisEntity[]> {
-    return await this.infografisRepository.find();
+  async findAllInfografis(id: number) {
+    return await this.infografisRepository.findOne({
+      where: { id },
+    });
   }
 
   async getImage(): Promise<any> {
-    const baseUrl = 'http://127.0.0.1:1337/api/infografiss?populate=*';
+    const baseUrl = 'http://127.0.0.1:1337/api/infografis?populate=*';
     try {
       const res = await axios.get(baseUrl);
-      const findImage = res.data.data.map((image: any) => {
-        const imageUrl = image.attributes.image.data.attributes.url;
-        return {
-          id: image.id,
-          url: imageUrl,
-        };
-      });
-      return findImage;
+      const findImage = res.data.data.attributes.image.data.attributes.url;
+      const imageUrl = `http://localhost:1337${findImage}`;
+      return {
+        image: imageUrl,
+      };
     } catch (error) {
       console.log(error);
       throw new NotFoundException('failed');
     }
   }
 
-  async findAllInfografisWithImage(): Promise<InfografisEntity[]> {
-    const findAllInfografis = await this.findAllInfografis();
+  async findAllInfografisWithImage(id: number): Promise<InfografisEntity[]> {
+    const findAllInfografis = await this.findAllInfografis(id);
     const getImage = await this.getImage();
 
-    const merge = findAllInfografis.map((item) => {
-      const image = getImage.find((img: any) => img.id == item.id);
+    const merge = () => {
       return {
-        ...item,
-        image: image ? `http://localhost:1337${image.url}` : ' ',
+        ...findAllInfografis,
+        ...getImage,
       };
-    });
-    return merge;
+    };
+    const infografis = merge();
+    return infografis;
   }
 }

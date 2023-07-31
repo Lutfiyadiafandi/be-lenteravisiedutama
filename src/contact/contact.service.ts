@@ -10,7 +10,9 @@ export class ContactService {
     private contactRepository: Repository<ContactEntity>,
   ) {}
 
-  async findAllContact(): Promise<ContactEntity[]> {
-    return await this.contactRepository.find();
+  async findAllContact(id: number) {
+    return await this.contactRepository.findOne({
+      where: { id },
+    });
   }
 }

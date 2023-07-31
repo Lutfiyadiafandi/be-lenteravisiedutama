@@ -1,9 +1,9 @@
-import { Controller, Get, Param, Query, Req, Res } from '@nestjs/common';
+import { Controller, Get, Param, Query, Res } from '@nestjs/common';
 import { ArtikelService } from './artikel.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('artikel')
+@Controller('api/artikel')
 export class ArtikelController {
   constructor(private readonly artikelService: ArtikelService) {}
 

@@ -3,10 +3,9 @@ import { BundlingService } from './bundling.service';
 import { BundlingController } from './bundling.controller';
 import { BundlingEntity } from './entities/bundling.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ProductEntity } from 'src/product/entities/product.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([BundlingEntity, ProductEntity])],
+  imports: [TypeOrmModule.forFeature([BundlingEntity])],
   controllers: [BundlingController],
   providers: [BundlingService],
 })
