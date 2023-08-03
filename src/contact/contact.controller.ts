@@ -3,7 +3,7 @@ import { ContactService } from './contact.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('api/contact')
+@Controller('contact')
 export class ContactController {
   constructor(private readonly contactService: ContactService) {}
 

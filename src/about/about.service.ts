@@ -13,16 +13,17 @@ export class AboutService {
 
   async findAllAbout(id: number) {
     return await this.aboutRepository.findOne({
-      where: {id}
+      where: { id },
     });
   }
 
   async getImage(): Promise<any> {
-    const baseUrl = 'http://127.0.0.1:1337/api/about?populate=*';
+    const baseUrl =
+      'https://strapi.lenteravisiedutama.com/api/about?populate=*';
     try {
       const res = await axios.get(baseUrl);
       const findImage = res.data.data.attributes.image.data.attributes.url;
-      const imageUrl = `http://localhost:1337${findImage}`;
+      const imageUrl = `https://strapi.lenteravisiedutama.com${findImage}`;
       return {
         image: imageUrl,
       };

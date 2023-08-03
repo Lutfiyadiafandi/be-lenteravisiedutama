@@ -3,7 +3,7 @@ import { BannerService } from './banner.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('api/banner')
+@Controller('banner')
 export class BannerController {
   constructor(private readonly bannerService: BannerService) {}
 

@@ -12,14 +12,15 @@ export class PartnerService {
   ) {}
 
   async getImagePartner(): Promise<any> {
-    const baseUrl = 'http://127.0.0.1:1337/api/partners?populate=*';
+    const baseUrl =
+      'https://strapi.lenteravisiedutama.com/api/partners?populate=*';
     try {
       const res = await axios.get(baseUrl);
       const findImage = res.data.data.map((image: any) => {
         const imageUrl = image.attributes.logo.data.attributes.url;
         return {
           id: image.id,
-          logo: `http://localhost:1337${imageUrl}`,
+          logo: `https://strapi.lenteravisiedutama.com${imageUrl}`,
         };
       });
       return findImage;

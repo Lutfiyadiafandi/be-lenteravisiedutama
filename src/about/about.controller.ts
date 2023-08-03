@@ -3,7 +3,7 @@ import { AboutService } from './about.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('api/about')
+@Controller('about')
 export class AboutController {
   constructor(private readonly aboutService: AboutService) {}
 

@@ -3,7 +3,7 @@ import { VisimisiService } from './visimisi.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('api/visimisi')
+@Controller('visimisi')
 export class VisimisiController {
   constructor(private readonly visimisiService: VisimisiService) {}
 

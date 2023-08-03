@@ -3,7 +3,7 @@ import { WhyLveService } from './why-lve.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('api/why-lve')
+@Controller('why-lve')
 export class WhyLveController {
   constructor(private readonly whyLveService: WhyLveService) {}
 

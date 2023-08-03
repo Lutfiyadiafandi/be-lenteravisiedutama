@@ -3,7 +3,7 @@ import { GalleryService } from './gallery.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('api/gallery')
+@Controller('gallery')
 export class GalleryController {
   constructor(private readonly galleryService: GalleryService) {}
 

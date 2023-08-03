@@ -3,7 +3,7 @@ import { InfografisService } from './infografis.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('api/infografis')
+@Controller('infografis')
 export class InfografisController {
   constructor(private readonly infografisService: InfografisService) {}
 

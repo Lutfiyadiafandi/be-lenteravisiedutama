@@ -14,17 +14,17 @@ import { GalleryModule } from './gallery/gallery.module';
 import { PartnerModule } from './partner/partner.module';
 import { ContactModule } from './contact/contact.module';
 import { WhyLveModule } from './why-lve/why-lve.module';
-// import { BundlingProductModule } from './relations/bundlingproduct.module';
+require('dotenv').config();
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '',
-      database: 'lentera',
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT),
+      username: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME,
       autoLoadEntities: true,
       synchronize: false,
     }),
@@ -40,7 +40,6 @@ import { WhyLveModule } from './why-lve/why-lve.module';
     PartnerModule,
     ContactModule,
     WhyLveModule,
-    // BundlingProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],

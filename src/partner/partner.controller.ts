@@ -3,7 +3,7 @@ import { PartnerService } from './partner.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('api/partner')
+@Controller('partner')
 export class PartnerController {
   constructor(private readonly partnerService: PartnerService) {}
 

@@ -27,7 +27,8 @@ export class ArtikelService {
   }
 
   async getImage(): Promise<any> {
-    const baseUrl = 'http://127.0.0.1:1337/api/artikels?populate=*';
+    const baseUrl =
+      'https://strapi.lenteravisiedutama.com/api/artikels?populate=*';
     try {
       const res = await axios.get(baseUrl);
       const findImage = res.data.data.map((image: any) => {
@@ -45,11 +46,11 @@ export class ArtikelService {
   }
 
   async getOneImage(slug: string): Promise<any> {
-    const baseUrl = `http://127.0.0.1:1337/api/artikels/${slug}?populate=*`;
+    const baseUrl = `https://strapi.lenteravisiedutama.com/api/artikels/${slug}?populate=*`;
     try {
       const res = await axios.get(baseUrl);
       const findImage = res.data.data.attributes.image.data.attributes.url;
-      const imageUrl = `http://localhost:1337${findImage}`;
+      const imageUrl = `https://strapi.lenteravisiedutama.com${findImage}`;
       return {
         image: imageUrl,
       };
@@ -68,7 +69,9 @@ export class ArtikelService {
       const image = getImage.find((img: any) => img.id == item.id);
       return {
         ...item,
-        image: image ? `http://localhost:1337${image.url}` : ' ',
+        image: image
+          ? `https://strapi.lenteravisiedutama.com${image.url}`
+          : ' ',
       };
     });
     let artikelReverse = merge.reduce((acc, curr) => [curr, ...acc], []);

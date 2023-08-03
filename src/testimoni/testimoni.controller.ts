@@ -3,7 +3,7 @@ import { TestimoniService } from './testimoni.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('api/testimoni')
+@Controller('testimoni')
 export class TestimoniController {
   constructor(private readonly testimoniService: TestimoniService) {}
 

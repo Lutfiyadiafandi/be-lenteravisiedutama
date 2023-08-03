@@ -12,14 +12,15 @@ export class GalleryService {
   ) {}
 
   async getImageGallery(): Promise<any> {
-    const baseUrl = 'http://127.0.0.1:1337/api/galleries?populate=*';
+    const baseUrl =
+      'https://strapi.lenteravisiedutama.com/api/galleries?populate=*';
     try {
       const res = await axios.get(baseUrl);
       const findImage = res.data.data.map((image: any) => {
         const imageUrl = image.attributes.image.data.attributes.url;
         return {
           id: image.id,
-          image: `http://localhost:1337${imageUrl}`,
+          image: `https://strapi.lenteravisiedutama.com${imageUrl}`,
         };
       });
       return findImage;

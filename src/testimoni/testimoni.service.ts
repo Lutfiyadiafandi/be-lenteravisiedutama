@@ -16,7 +16,8 @@ export class TestimoniService {
   }
 
   async getImage(): Promise<any> {
-    const baseUrl = 'http://127.0.0.1:1337/api/testimonis?populate=*';
+    const baseUrl =
+      'https://strapi.lenteravisiedutama.com/api/testimonis?populate=*';
     try {
       const res = await axios.get(baseUrl);
       const findImage = res.data.data.map((image: any) => {
@@ -41,7 +42,9 @@ export class TestimoniService {
       const image = getImage.find((img: any) => img.id == item.id);
       return {
         ...item,
-        image: image ? `http://localhost:1337${image.url}` : ' ',
+        image: image
+          ? `https://strapi.lenteravisiedutama.com${image.url}`
+          : ' ',
       };
     });
     return merge;

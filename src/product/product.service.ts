@@ -22,7 +22,8 @@ export class ProductService {
   }
 
   async getImage(): Promise<any> {
-    const baseUrl = 'http://127.0.0.1:1337/api/products?populate=*';
+    const baseUrl =
+      'https://strapi.lenteravisiedutama.com/api/products?populate=*';
     try {
       const res = await axios.get(baseUrl);
       const findImage = res.data.data.map((image: any) => {
@@ -40,11 +41,11 @@ export class ProductService {
   }
 
   async getOneImage(slug: string): Promise<any> {
-    const baseUrl = `http://127.0.0.1:1337/api/products/${slug}?populate=*`;
+    const baseUrl = `https://strapi.lenteravisiedutama.com/api/products/${slug}?populate=*`;
     try {
       const res = await axios.get(baseUrl);
       const findImage = res.data.data.attributes.image.data.attributes.url;
-      const imageUrl = `http://localhost:1337${findImage}`;
+      const imageUrl = `https://strapi.lenteravisiedutama.com${findImage}`;
       return {
         image: imageUrl,
       };
@@ -62,7 +63,9 @@ export class ProductService {
       const image = getImage.find((img: any) => img.id == item.id);
       return {
         ...item,
-        image: image ? `http://localhost:1337${image.url}` : ' ',
+        image: image
+          ? `https://strapi.lenteravisiedutama.com${image.url}`
+          : ' ',
       };
     });
     return merge;

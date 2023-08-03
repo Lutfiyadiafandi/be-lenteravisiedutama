@@ -3,7 +3,7 @@ import { BundlingService } from './bundling.service';
 import { BaseResponseApi } from 'src/response/response';
 import { Response } from 'express';
 
-@Controller('api/bundling')
+@Controller('bundling')
 export class BundlingController {
   constructor(private readonly bundlingService: BundlingService) {}
 
