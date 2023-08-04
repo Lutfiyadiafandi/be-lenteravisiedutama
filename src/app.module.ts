@@ -14,8 +14,8 @@ import { GalleryModule } from './gallery/gallery.module';
 import { PartnerModule } from './partner/partner.module';
 import { ContactModule } from './contact/contact.module';
 import { WhyLveModule } from './why-lve/why-lve.module';
-require('dotenv').config();
-
+import { config } from 'dotenv';
+config();
 @Module({
   imports: [
     TypeOrmModule.forRoot({
