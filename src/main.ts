@@ -21,6 +21,8 @@ async function bootstrap() {
     sess.cookie.sameSite = 'none';
     app.use(function (req, res, next) {
       res.setHeader(
+        'Access-Control-Allow-Origin',
+        '*',
         'Set-Cookie',
         'cross-site-cookie=whatever; SameSite=None; Secure',
       );
